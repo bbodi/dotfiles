@@ -1,0 +1,81 @@
+colorscheme gruvbox
+
+add-highlighter global/ show-matching
+
+# relative line numbers
+hook global BufCreate .* %[
+    add-highlighter buffer/ number-lines -relative -hlcursor
+    add-highlighter buffer/ wrap
+]
+
+
+# Switch cursor color in insert mode
+# ──────────────────────────────────
+
+set-face global InsertCursor default,red+B
+
+hook global ModeChange .*:.*:insert %{
+    set-face window PrimaryCursor InsertCursor
+    set-face window PrimaryCursorEol InsertCursor
+}
+
+hook global ModeChange .*:insert:.* %{ try %{
+    unset-face window PrimaryCursor
+    unset-face window PrimaryCursorEol
+} }
+
+map global user s -docstring '' 's'
+
+map global normal k 'n'          -docstring 'enter command prompt'
+map global normal K 'N'          -docstring 'enter command prompt'
+map global normal j '<a-n>'          -docstring 'enter command prompt'
+map global normal J '<a-N>'          -docstring 'enter command prompt'
+
+map global normal t 'F'          -docstring 'enter command prompt'
+#map global normal s 't'          -docstring 'enter command prompt'
+map global normal T '<a-F>'          -docstring 'enter command prompt'
+map global normal ',' '<a-.>'          -docstring 'enter command prompt'
+#map global normal S '<a-t>'          -docstring 'enter command prompt'
+
+map global normal <space> ','         -docstring 'enter command prompt'
+map global normal <esc> <space><semicolon><esc>         -docstring 'enter command prompt'
+map global normal e 'j'          -docstring 'enter command prompt'
+map global normal n 'h'          -docstring 'enter command prompt'
+map global normal i 'l'          -docstring 'enter command prompt'
+map global normal u 'k'          -docstring 'enter command prompt'
+map global normal E 'J'          -docstring 'enter command prompt'
+map global normal N 'H'          -docstring 'enter command prompt'
+map global normal I 'L'          -docstring 'enter command prompt'
+map global normal U 'K'          -docstring 'enter command prompt'
+
+map global normal m 'b'          -docstring 'enter command prompt'
+map global normal o 'w'          -docstring 'enter command prompt'
+map global normal l '<g><i>'          -docstring 'enter command prompt'
+map global normal L '<G><i>'          -docstring 'enter command prompt'
+map global normal y '<g><l>'          -docstring 'enter command prompt'
+map global normal Y '<G><l>'          -docstring 'enter command prompt'
+map global normal a '<a-a>w'          -docstring 'enter command prompt'
+map global normal A '%'          -docstring 'enter command prompt'
+map global normal c 'y'          -docstring 'enter command prompt'
+#map global normal r '<a-c>'          -docstring 'enter command prompt'
+map global normal d '<a-d>'          -docstring 'enter command prompt'
+map global normal D 'd'          -docstring 'enter command prompt'
+
+map global normal x 'C'          -docstring 'enter command prompt'
+
+map global normal b '<c-o>'          -docstring 'enter command prompt'
+map global normal B '<c-i>'          -docstring 'enter command prompt'
+
+map global normal <ret> 'o'          -docstring 'enter command prompt'
+map global normal <s-ret> 'O'          -docstring 'enter command prompt'
+map global normal h 'i'          -docstring 'enter command prompt'
+map global normal <`> 'a'          -docstring 'enter command prompt'
+map global normal H 'I'          -docstring 'enter command prompt'
+map global normal <~> 'A'          -docstring 'enter command prompt'
+
+map global normal <z> 'u'          -docstring 'enter command prompt'
+map global normal <Z> 'U'          -docstring 'enter command prompt'
+
+
+
+
