@@ -1,0 +1,127 @@
+theme = "monokai_pro"
+
+[editor]
+line-number = "relative"
+cursorline = true
+auto-format = false
+color-modes = true
+auto-info = true
+auto-completion = true
+
+[editor.lsp]
+display-messages = true
+auto-signature-help	= false
+display-signature-help-docs = false
+
+[editor.cursor-shape]
+insert = "bar"
+normal = "block"
+select = "block"
+
+[keys.normal]
+"C-s" = ":wa"
+
+l = "goto_line_start"
+y = "goto_line_end"
+u = "move_line_up"
+e = "move_line_down"
+n = "move_char_left"
+i = "move_char_right"
+N = "move_prev_word_start"
+I = "move_next_word_end"
+
+j = "search_prev"
+k = "search_next"
+
+x = "copy_selection_on_next_line"
+X = "copy_selection_on_prev_line"
+
+"," = "repeat_last_motion"
+
+";" = "flip_selections"
+
+
+B = "jump_forward"
+b = "jump_backward"
+
+
+"s" = "select_mode" # v should be mapped to z (view mode)
+"h" = "insert_mode"
+"H" = "insert_at_line_start"
+"tab" = "append_mode"
+"S-tab" = "insert_at_line_end"
+#"minus" = "insert_at_line_end"
+"r" = "change_selection_noyank"
+"R" = "replace"
+
+"C-r" = "replace_with_yanked"
+
+
+"ret" = "add_newline_below"
+"S-ret" = "add_newline_above"
+
+
+c = "yank"
+z = "undo"
+Z = "redo"
+d = "delete_selection_noyank"
+D = "delete_selection"
+a = "expand_selection"
+A = ["extend_line_below", "select_mode"]
+
+"esc" = ["collapse_selection", "keep_primary_selection", "normal_mode"]
+
+[keys.normal.w]
+	I   = "vsplit"
+	E   = "hsplit"
+	"q"   = "wclose"
+	"k"   = "wonly"
+	"i"   = "jump_view_right" 
+    "e"   = "jump_view_down"
+	"u"   = "jump_view_up" 
+	"n"   = "jump_view_left"
+	"w"   = "rotate_view"
+
+[keys.select]
+l = "extend_to_line_start"
+y = "extend_to_line_end"
+u = "extend_line_up"
+e = "extend_line_down"
+n = "extend_char_left"
+i = "extend_char_right"
+N = "extend_prev_word_start"
+I = "extend_next_word_end"
+
+j = "extend_search_prev"
+k = "extend_search_next"
+
+"," = "repeat_last_motion"
+
+";" = "flip_selections"
+
+
+B = "jump_forward"
+b = "jump_backward"
+
+"h" = "insert_mode"
+"H" = "insert_at_line_start"
+"_" = "append_mode"
+"minus" = "insert_at_line_end"
+"r" = "change_selection_noyank"
+"R" = "replace"
+
+"C-r" = "replace_with_yanked"
+
+"ret" = "add_newline_below"
+"S-ret" = "add_newline_above"
+
+
+c = "yank"
+z = "undo"
+Z = "redo"
+d = "delete_selection_noyank"
+D = "delete_selection"
+a = "expand_selection"
+A = "extend_line_below"
+
+"esc" = ["collapse_selection", "keep_primary_selection", "normal_mode"]
