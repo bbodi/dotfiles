@@ -18,11 +18,17 @@ insert = "bar"
 normal = "block"
 select = "block"
 
+[editor.indent-guides]
+render = true
+
+
 [keys.normal]
 "C-s" = ":wa"
 
 l = "goto_line_start"
+L = "kill_to_line_start"
 y = "goto_line_end"
+Y = "kill_to_line_end"
 u = "move_line_up"
 e = "move_line_down"
 n = "move_char_left"
@@ -90,6 +96,7 @@ A = ["extend_line_below", "select_mode"]
 	"u"   = "jump_view_up" 
 	"n"   = "jump_view_left"
 	"w"   = "rotate_view"
+#sticky = true
 
 [keys.select]
 l = "extend_to_line_start"
@@ -128,7 +135,7 @@ b = "jump_backward"
 "S-ret" = "open_above"
 
 "p" = "paste_before"
-"P" = ["select_register",  "paste_before"]
+"P" = "paste_after"
 "C" = ["select_register",  "yank"]
 
 #"C-r" = "replace_with_yanked"
