@@ -166,4 +166,3 @@ A = "extend_line_below"
 
 [keys.insert]
 "C-s" = ["normal_mode", ":wa"]
-"C-p" = "paste_before"
