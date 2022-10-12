@@ -65,8 +65,8 @@ b = "jump_backward"
 "ret" = "open_below"
 "S-ret" = "open_above"
 
-"p" = "paste_before"
-"P" = ["select_register",  "paste_before"]
+"p" = "paste_after"
+"P" = "paste_before"
 "C" = ["select_register",  "yank"]
 
 #"C-r" = "replace_with_yanked"
