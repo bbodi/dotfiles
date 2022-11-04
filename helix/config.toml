@@ -7,6 +7,7 @@ auto-format = false
 color-modes = true
 auto-info = true
 auto-completion = true
+auto-pairs = false
 
 [editor.lsp]
 display-messages = true
@@ -35,7 +36,6 @@ nbsp = "⍽"
 tab = "→"
 newline = "⏎"
 tabpad = "·" # Tabs will look like "→···" (depending on tab width)
-
 
 [keys.normal]
 "C-s" = ":wa"
@@ -72,9 +72,8 @@ b = "jump_backward"
 "w" = "select_mode" # z (view mode) should be mapped to v
 "h" = "insert_mode"
 "H" = "insert_at_line_start"
-"tab" = "append_mode"
-"S-tab" = "insert_at_line_end"
-#"minus" = "insert_at_line_end"
+"ret" = "append_mode"
+"tab" = "insert_at_line_end"
 "_" = "change_selection_noyank"
 #"R" = "replace"
 #"ret" = "open_below"
@@ -87,8 +86,10 @@ b = "jump_backward"
 #"C-r" = "replace_with_yanked"
 
 
-"ret" = "add_newline_below"
-"S-ret" = "add_newline_above"
+
+
+# "ret" = "add_newline_below"
+# "S-ret" = "add_newline_above"
 
 
 c = "yank"
@@ -98,6 +99,10 @@ d = "delete_selection_noyank"
 D = "delete_selection"
 a = "expand_selection"
 A = "shrink_selection"
+
+"(" = "surround_add"
+")" = "surround_delete"
+
 
 "esc" = ["collapse_selection", "keep_primary_selection", "normal_mode"]
 
@@ -115,13 +120,14 @@ A = "shrink_selection"
 
 
 [keys.normal.g]
-l   = "goto_line_start"
-
-
 #sticky = true
 
 [keys.select]
 "C-s" = ["normal_mode", ":wa"]
+
+"(" = "surround_add"
+")" = "surround_delete"
+
 
 
 l = "goto_first_nonwhitespace"
@@ -152,12 +158,13 @@ b = "jump_backward"
 
 "h" = "insert_mode"
 "H" = "insert_at_line_start"
-"_" = "append_mode"
-"minus" = "insert_at_line_end"
+# "_" = "append_mode"
+"ret" = "append_mode"
+"tab" = "insert_at_line_end"
 "_" = "change_selection_noyank"
 #"R" = "replace"
-"ret" = "open_below"
-"S-ret" = "open_above"
+# "ret" = "open_below"
+# "S-ret" = "open_above"
 
 "p" = "paste_after"
 "P" = "paste_before"
@@ -165,8 +172,8 @@ b = "jump_backward"
 
 #"C-r" = "replace_with_yanked"
 
-"ret" = "add_newline_below"
-"S-ret" = "add_newline_above"
+# "ret" = "add_newline_below"
+# "S-ret" = "add_newline_above"
 
 
 c = "yank"
@@ -177,7 +184,7 @@ D = "delete_selection"
 a = "expand_selection"
 A = "shrink_selection"
 
-"esc" = ["collapse_selection", "keep_primary_selection", "normal_mode"]
+"esc" = "normal_mode"
 
 
 [keys.insert]
