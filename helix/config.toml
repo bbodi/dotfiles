@@ -41,9 +41,9 @@ tabpad = "·" # Tabs will look like "→···" (depending on tab width)
 "C-s" = ":wa"
 
 l = "goto_first_nonwhitespace"
-L = "kill_to_line_start"
+L = "insert_at_line_start"
 y = "goto_line_end_newline"
-Y = "kill_to_line_end"
+Y = "insert_at_line_end"
 u = "move_line_up"
 e = "move_line_down"
 n = "move_char_left"
@@ -57,7 +57,6 @@ j = "search_prev"
 k = "search_next"
 "?" = ["expand_selection", "search_selection", "search_next"]
 
-#x = "copy_selection_on_next_line"
 X = "extend_line_above"
 #S = "select_regex"
 
@@ -71,9 +70,9 @@ b = "jump_backward"
 
 "w" = "select_mode" # z (view mode) should be mapped to v
 "h" = "insert_mode"
-"H" = "insert_at_line_start"
+"H" = ["kill_to_line_start", "insert_mode"]
 "ret" = "append_mode"
-"tab" = "insert_at_line_end"
+"tab" = ["kill_to_line_end", "insert_mode"]
 "_" = "change_selection_noyank"
 #"R" = "replace"
 #"ret" = "open_below"
@@ -81,7 +80,8 @@ b = "jump_backward"
 
 "p" = "paste_after"
 "P" = "paste_before"
-"C" = "copy_selection_on_next_line"
+"E" = "copy_selection_on_next_line"
+"U" = "copy_selection_on_prev_line"
 
 #"C-r" = "replace_with_yanked"
 
@@ -144,7 +144,6 @@ I = "extend_next_word_end"
 j = "extend_search_prev"
 k = "extend_search_next"
 
-#x = "copy_selection_on_next_line"
 X = "extend_line_above"
 #S = "select_regex"
 
@@ -168,7 +167,8 @@ b = "jump_backward"
 
 "p" = "paste_after"
 "P" = "paste_before"
-"C" = "copy_selection_on_next_line"
+"E" = "copy_selection_on_next_line"
+"U" = "copy_selection_on_prev_line"
 
 #"C-r" = "replace_with_yanked"
 
