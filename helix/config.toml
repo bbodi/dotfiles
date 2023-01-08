@@ -29,6 +29,8 @@ render = true
 #space = "all"
 #tab = "all"
 newline = "all"
+[editor.file-picker]
+hidden = true
 
 [editor.whitespace.characters]
 space = "·"
@@ -62,7 +64,9 @@ X = "extend_line_above"
 
 "," = "repeat_last_motion"
 
-";" = "flip_selections"
+";" = "flip_selections"      
+"C-x" = "split_selection_on_newline"
+"S-X" = "trim_selections"
 
 
 B = "jump_forward"
@@ -72,7 +76,7 @@ b = "jump_backward"
 "h" = "insert_mode"
 "H" = ["kill_to_line_start", "insert_mode"]
 "ret" = "append_mode"
-"tab" = ["kill_to_line_end", "insert_mode"]
+"S-ret" = ["kill_to_line_end", "insert_mode"]
 "_" = "change_selection_noyank"
 #"R" = "replace"
 #"ret" = "open_below"
@@ -159,7 +163,7 @@ b = "jump_backward"
 "H" = "insert_at_line_start"
 # "_" = "append_mode"
 "ret" = "append_mode"
-"tab" = "insert_at_line_end"
+"S-ret" = "insert_at_line_end"
 "_" = "change_selection_noyank"
 #"R" = "replace"
 # "ret" = "open_below"
@@ -169,6 +173,7 @@ b = "jump_backward"
 "P" = "paste_before"
 "E" = "copy_selection_on_next_line"
 "U" = "copy_selection_on_prev_line"
+"S-X" = "trim_selections"
 
 #"C-r" = "replace_with_yanked"
 
