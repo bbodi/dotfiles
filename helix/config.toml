@@ -60,14 +60,13 @@ k = "search_next"
 K = "remove_primary_selection"
 "?" = ["expand_selection", "search_selection", "search_next"]
 
-X = "extend_line_above"
 #S = "select_regex"
 
 "," = "repeat_last_motion"
 
 ";" = "flip_selections"      
 "C-x" = "split_selection_on_newline"
-"S-X" = "trim_selections"
+"X" = "trim_selections"
 
 
 B = "jump_forward"
@@ -154,7 +153,6 @@ j = "extend_search_prev"
 k = "extend_search_next"
 K = "remove_primary_selection"
 
-X = "extend_line_above"
 #S = "select_regex"
 
 "," = "repeat_last_motion"
@@ -179,7 +177,7 @@ b = "jump_backward"
 "P" = "paste_before"
 "E" = "copy_selection_on_next_line"
 "U" = "copy_selection_on_prev_line"
-"S-X" = "trim_selections"
+"X" = "trim_selections"
 
 #"C-r" = "replace_with_yanked"
 
