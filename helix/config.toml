@@ -82,8 +82,6 @@ b = "jump_backward"
 #"ret" = "open_below"
 #"S-ret" = "open_above"
 
-"p" = "paste_after"
-"P" = "paste_before"
 "E" = "copy_selection_on_next_line"
 "U" = "copy_selection_on_prev_line"
 
@@ -110,8 +108,8 @@ A = "shrink_selection"
 "esc" = ["collapse_selection", "keep_primary_selection", "normal_mode"]
 
 c = ["normal_mode", ":clipboard-yank"]
-p = ":clipboard-paste-after"
-P = ":clipboard-paste-before"
+"p" = ":clipboard-paste-after"
+"P" = ":clipboard-paste-before"
 R = ":clipboard-paste-replace"
 
 [keys.normal.W]
@@ -173,8 +171,6 @@ b = "jump_backward"
 # "ret" = "open_below"
 # "S-ret" = "open_above"
 
-"p" = "paste_after"
-"P" = "paste_before"
 "E" = "copy_selection_on_next_line"
 "U" = "copy_selection_on_prev_line"
 "X" = "trim_selections"
@@ -192,7 +188,6 @@ R = ":clipboard-paste-replace"
 z = "undo"
 Z = "redo"
 d = "delete_selection_noyank"
-D = [":clipboard-yank-join", "delete_selection"]
 D = [":clipboard-yank-join", "delete_selection"]
 a = "expand_selection"
 A = "shrink_selection"
