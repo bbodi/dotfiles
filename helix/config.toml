@@ -1,3 +1,4 @@
+
 theme = "monokai_pro"
 
 [editor]
@@ -71,10 +72,8 @@ b = "jump_backward"
 "S-ret" = ["kill_to_line_end", "insert_mode"]
 "_" = "change_selection_noyank"
 
-# "E" = "copy_selection_on_next_line"
-# "U" = "copy_selection_on_prev_line"
-E = "scroll_down"
-U = "scroll_up"
+E = "copy_selection_on_next_line"
+U = "copy_selection_on_prev_line"
 
 
 z = "undo"
@@ -83,6 +82,7 @@ d = "delete_selection_noyank"
 D = "delete_selection"
 a = "expand_selection"
 A = "shrink_selection"
+J = "join_selections_space"
 
 "(" = "surround_add"
 ")" = "surround_delete"
@@ -109,10 +109,18 @@ R = "replace_with_yanked"
 	n   = "jump_view_left"
 	w   = "rotate_view"
 
+[keys.normal.v]
+	v   = "align_view_center"
+	u   = "scroll_up"
+	e   = "scroll_down"
+	U   = "align_view_top"
+	E   = "align_view_bottom"
+
 
 [keys.normal.g]
 
 [keys.select]
+w = "select_mode"
 "C-s" = ["normal_mode", ":wa"]
 
 "(" = "surround_add"
@@ -125,8 +133,8 @@ l = "goto_first_nonwhitespace"
 y = "goto_line_end_newline"
 L = ["split_selection_on_newline", "insert_at_line_start"]
 Y = ["split_selection_on_newline", "insert_at_line_end"]
-# u = "extend_line_up"
-# e = "extend_line_down"
+u = "extend_line_up"
+e = "extend_line_down"
 n = "extend_char_left"
 i = "extend_char_right"
 N = "extend_prev_word_start"
@@ -151,8 +159,6 @@ b = "jump_backward"
 "S-ret" = "insert_at_line_end"
 "_" = "change_selection_noyank"
 
-"e" = "copy_selection_on_next_line"
-"u" = "copy_selection_on_prev_line"
 "X" = "trim_selections"
 
 
@@ -167,10 +173,12 @@ d = "delete_selection_noyank"
 D = "delete_selection"
 a = "expand_selection"
 A = "shrink_selection"
+J = "join_selections_space"
 
 "esc" = "normal_mode"
 
 
 [keys.insert]
 "C-s" = ["normal_mode", ":wa"]
-"C-p" = ":clipboard-paste-before"
+"C-p" = "paste_before"
+"C-P" = ":clipboard-paste-before"
