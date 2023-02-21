@@ -1,4 +1,3 @@
-
 theme = "monokai_pro"
 
 [editor]
@@ -49,9 +48,11 @@ i = "move_char_right"
 N = "move_prev_word_start"
 I = "move_next_word_end"
 
-j = "search_prev"
-k = "search_next"
-K = "remove_primary_selection"
+"C-u" = ["move_line_up", "move_line_up", "move_line_up", "move_line_up"]
+"C-e" = ["move_line_down", "move_line_down", "move_line_down", "move_line_down"]
+O = "search_prev"
+o = "search_next"
+"C-o" = "remove_primary_selection"
 "?" = ["expand_selection", "search_selection", "search_next"]
 
 
@@ -75,28 +76,55 @@ b = "jump_backward"
 E = "copy_selection_on_next_line"
 U = "copy_selection_on_prev_line"
 
-
 z = "undo"
 Z = "redo"
 d = "delete_selection_noyank"
 D = "delete_selection"
 a = "expand_selection"
 A = "shrink_selection"
-J = "join_selections_space"
 
 "(" = "surround_add"
 ")" = "surround_delete"
 "minus" = "surround_replace"
-m = "select_textobject_inner"
-M = "select_textobject_around"
+m = "match_brackets"
+M = "select_textobject_inner"
 
 "esc" = ["collapse_selection", "keep_primary_selection", "normal_mode"]
 
 c = ["normal_mode", "yank"]
 C = ["normal_mode", ":clipboard-yank"]
 p = "paste_before"
-P = ":clipboard-paste-before"
+P = "paste_after"
 R = "replace_with_yanked"
+
+
+j = "add_newline_above"
+J = "open_above"
+k = "add_newline_below"
+K = "open_below"
+
+[keys.normal."@"]
+c = ["normal_mode", ":clipboard-yank"]
+d = "delete_selection"
+p = ":clipboard-paste-before"
+P = ":clipboard-paste-after"
+r = ":clipboard-paste-replace"
+
+[keys.normal.s]
+j = "join_selections_space"
+s = "select_regex"
+S = "split_selection"
+k = "keep_selections"
+x = "split_selection_on_newline"
+t = "trim_selections"
+d = "remove_primary_selection"
+D = "remove_selections"
+c = "save_selection"
+m = "merge_consecutive_selections"
+n = "rotate_selections_backward"
+i = "rotate_selections_forward"
+N = "rotate_selection_contents_backward"
+I = "rotate_selection_contents_forward"
 
 [keys.normal.W]
 	I   = "vsplit"
@@ -118,7 +146,27 @@ R = "replace_with_yanked"
 
 
 [keys.normal.g]
+n = "goto_next_diag"
+p = "goto_prev_diag"
+u = "goto_file_start"
+[keys.normal.f]
+i = "find_till_char"
+o = "find_next_char"
+n = "till_prev_char"
+m = "find_prev_char"
 
+[keys.normal.space]
+t = ":sh kitty @ send-text --match 'num:0' 'clear\\ncargo test \\n'"
+T = ":pipe-to xargs -I {} kitty @ send-text --match 'num:0' 'clear\\ncargo test {}\\n'"
+
+##########################################################################################
+##########################################################################################
+##########################################################################################
+##########################################################################################
+# SELECT
+##########################################################################################
+##########################################################################################
+##########################################################################################
 [keys.select]
 w = "select_mode"
 "C-s" = ["normal_mode", ":wa"]
@@ -127,6 +175,8 @@ w = "select_mode"
 ")" = "surround_delete"
 "minus" = "surround_replace"
 
+E = "copy_selection_on_next_line"
+U = "copy_selection_on_prev_line"
 
 
 l = "goto_first_nonwhitespace"
@@ -140,10 +190,11 @@ i = "extend_char_right"
 N = "extend_prev_word_start"
 I = "extend_next_word_end"
 
-j = "extend_search_prev"
-k = "extend_search_next"
-K = "remove_primary_selection"
+"C-u" = ["extend_line_up", "extend_line_up", "extend_line_up", "extend_line_up"]
+"C-e" = ["extend_line_down", "extend_line_down", "extend_line_down", "extend_line_down"]
 
+m = "match_brackets"
+M = "select_textobject_inner"
 
 "," = "repeat_last_motion"
 
@@ -159,13 +210,11 @@ b = "jump_backward"
 "S-ret" = "insert_at_line_end"
 "_" = "change_selection_noyank"
 
-"X" = "trim_selections"
-
 
 c = ["normal_mode", "yank"]
 C = ["normal_mode", ":clipboard-yank"]
 p = "paste_before"
-P = ":clipboard-paste-before"
+P = "paste_after"
 R = "replace_with_yanked"
 z = "undo"
 Z = "redo"
@@ -173,12 +222,47 @@ d = "delete_selection_noyank"
 D = "delete_selection"
 a = "expand_selection"
 A = "shrink_selection"
-J = "join_selections_space"
+
+j = "add_newline_above"
+J = "open_above"
+k = "add_newline_below"
+K = "open_below"
+O = "extend_search_prev"
+o = "extend_search_next"
 
 "esc" = "normal_mode"
 
+[keys.select."@"]
+c = ["normal_mode", ":clipboard-yank"]
+d = "delete_selection"
+p = ":clipboard-paste-before"
+P = ":clipboard-paste-after"
+r = ":clipboard-paste-replace"
+
+[keys.select.s]
+j = "join_selections_space"
+s = "select_regex"
+S = "split_selection"
+k = "keep_selections"
+x = "split_selection_on_newline"
+t = "trim_selections"
+d = "remove_primary_selection"
+D = "remove_selections"
+c = "save_selection"
+m = "merge_consecutive_selections"
+n = "rotate_selections_backward"
+i = "rotate_selections_forward"
+N = "rotate_selection_contents_backward"
+I = "rotate_selection_contents_forward"
+
+[keys.select.space]
+# t = ":sh kitty @ send-text --match 'num:0' cargo test \\\\n"
+R = ":sh kitty @ send-text --match 'num:0' 'clear\\ncargo run\\n'"
+t = ":sh kitty @ send-text --match 'num:0' 'clear\\ncargo test\\n'"
+T = ":pipe-to xargs -I {} kitty @ send-text --match 'num:0' 'clear\\ncargo test {}\\n'"
 
 [keys.insert]
 "C-s" = ["normal_mode", ":wa"]
 "C-p" = "paste_before"
 "C-P" = ":clipboard-paste-before"
+
