@@ -72,6 +72,7 @@ b = "jump_backward"
 "ret" = "append_mode"
 "S-ret" = ["kill_to_line_end", "insert_mode"]
 "_" = "change_selection_noyank"
+"minus" = "replace"
 
 E = "copy_selection_on_next_line"
 U = "copy_selection_on_prev_line"
@@ -85,7 +86,7 @@ A = "shrink_selection"
 
 "(" = "surround_add"
 ")" = "surround_delete"
-"minus" = "surround_replace"
+"=" = "surround_replace"
 m = "match_brackets"
 M = "select_textobject_inner"
 
@@ -94,8 +95,11 @@ M = "select_textobject_inner"
 c = ["normal_mode", "yank"]
 C = ["normal_mode", ":clipboard-yank"]
 p = "paste_before"
-P = "paste_after"
-R = "replace_with_yanked"
+P = ":clipboard-paste-before"
+# P = "paste_after"
+r = "replace_with_yanked"
+R = ":clipboard-paste-replace"
+# R = "replace_with_yanked"
 
 
 j = "add_newline_above"
@@ -103,12 +107,12 @@ J = "open_above"
 k = "add_newline_below"
 K = "open_below"
 
-[keys.normal."@"]
-c = ["normal_mode", ":clipboard-yank"]
-d = "delete_selection"
-p = ":clipboard-paste-before"
-P = ":clipboard-paste-after"
-r = ":clipboard-paste-replace"
+# [keys.normal."@"]
+# c = ["normal_mode", ":clipboard-yank"]
+# d = "delete_selection"
+# p = ":clipboard-paste-before"
+# P = ":clipboard-paste-after"
+# r = ":clipboard-paste-replace"
 
 [keys.normal.s]
 j = "join_selections_space"
@@ -139,24 +143,27 @@ I = "rotate_selection_contents_forward"
 
 [keys.normal.v]
 	v   = "align_view_center"
-	u   = "scroll_up"
-	e   = "scroll_down"
-	U   = "align_view_top"
-	E   = "align_view_bottom"
+	u   = "align_view_top"
+	e   = "align_view_bottom"
+	U   = "scroll_up"
+	E   = "scroll_down"
 
 
 [keys.normal.g]
-n = "goto_next_diag"
-p = "goto_prev_diag"
-u = "goto_file_start"
-[keys.normal.f]
+g = "goto_next_diag"
+G = "goto_prev_diag"
+u = "goto_window_top"
+U = "goto_file_start"
+e = "goto_window_bottom"
+E = "goto_file_end"
 i = "find_till_char"
 o = "find_next_char"
 n = "till_prev_char"
 m = "find_prev_char"
 
 [keys.normal.space]
-t = ":sh kitty @ send-text --match 'num:0' 'clear\\ncargo test \\n'"
+R = ":sh kitty @ send-text --match 'num:0' 'clear\\ncargo run\\n'"
+t = ":sh kitty @ send-text --match 'num:0' 'clear\\ncargo test\\n'"
 T = ":pipe-to xargs -I {} kitty @ send-text --match 'num:0' 'clear\\ncargo test {}\\n'"
 
 ##########################################################################################
@@ -173,7 +180,8 @@ w = "select_mode"
 
 "(" = "surround_add"
 ")" = "surround_delete"
-"minus" = "surround_replace"
+"=" = "surround_replace"
+
 
 E = "copy_selection_on_next_line"
 U = "copy_selection_on_prev_line"
@@ -209,13 +217,18 @@ b = "jump_backward"
 "ret" = "append_mode"
 "S-ret" = "insert_at_line_end"
 "_" = "change_selection_noyank"
+"minus" = "replace"
 
 
 c = ["normal_mode", "yank"]
 C = ["normal_mode", ":clipboard-yank"]
 p = "paste_before"
-P = "paste_after"
-R = "replace_with_yanked"
+P = ":clipboard-paste-before"
+# P = "paste_after"
+r = "replace_with_yanked"
+R = ":clipboard-paste-replace"
+# R = "replace_with_yanked"
+
 z = "undo"
 Z = "redo"
 d = "delete_selection_noyank"
@@ -232,12 +245,12 @@ o = "extend_search_next"
 
 "esc" = "normal_mode"
 
-[keys.select."@"]
-c = ["normal_mode", ":clipboard-yank"]
-d = "delete_selection"
-p = ":clipboard-paste-before"
-P = ":clipboard-paste-after"
-r = ":clipboard-paste-replace"
+# [keys.select."@"]
+# c = ["normal_mode", ":clipboard-yank"]
+# d = "delete_selection"
+# p = ":clipboard-paste-before"
+# P = ":clipboard-paste-after"
+# r = ":clipboard-paste-replace"
 
 [keys.select.s]
 j = "join_selections_space"
@@ -255,8 +268,26 @@ i = "rotate_selections_forward"
 N = "rotate_selection_contents_backward"
 I = "rotate_selection_contents_forward"
 
+[keys.select.g]
+g = "goto_next_diag"
+G = "goto_prev_diag"
+u = "goto_window_top"
+U = "goto_file_start"
+e = "goto_window_bottom"
+E = "goto_file_end"
+i = "find_till_char"
+o = "find_next_char"
+n = "till_prev_char"
+m = "find_prev_char"
+
+[keys.select.v]
+	v   = "align_view_center"
+	u   = "align_view_top"
+	e   = "align_view_bottom"
+	U   = "scroll_up"
+	E   = "scroll_down"
+
 [keys.select.space]
-# t = ":sh kitty @ send-text --match 'num:0' cargo test \\\\n"
 R = ":sh kitty @ send-text --match 'num:0' 'clear\\ncargo run\\n'"
 t = ":sh kitty @ send-text --match 'num:0' 'clear\\ncargo test\\n'"
 T = ":pipe-to xargs -I {} kitty @ send-text --match 'num:0' 'clear\\ncargo test {}\\n'"
@@ -265,4 +296,5 @@ T = ":pipe-to xargs -I {} kitty @ send-text --match 'num:0' 'clear\\ncargo test 
 "C-s" = ["normal_mode", ":wa"]
 "C-p" = "paste_before"
 "C-P" = ":clipboard-paste-before"
+
 
