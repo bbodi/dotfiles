@@ -1,0 +1,45 @@
+
+;;
+(deflocalkeys-macos
+  backslash 226
+)
+
+(defalias nav (layer-while-held navigation))
+(defalias sym (layer-while-held symbols))
+(defalias pipe9 (fork 9 S-\ (lshift)))
+(defsrc
+		     1 2 3 4 5 6 7 8 9 0
+             q w e r t y u i o p
+  caps       a s d f g h j k l ;
+      lshift z x c v b n m , . /
+  lctrl lalt lmeta spc rmeta ralt
+)
+
+(deflayer colemak
+       1 2 @nav 4 5 6 7 8 9 0
+       _ _ f    p b j l u y esc
+  bspc _ r s    t g m n e i o
+       z x c    d v _ k h S-- enter /
+  _ _ lshift spc @sym @nav
+)
+
+(deflayer navigation
+       1 2 3 4 5 6 7 8 9 0
+       _ _ f p b j home up   end   esc
+  bspc _ r s t g m left down right o
+       z x c d v _ k h _ enter /
+  _ _ lshift _ @sym @nav
+)
+(deflayer symbols
+       1 2 3 4 5 6 7 8 9 0
+       apos S-[ = S-] S-apos 0 7 8 @pipe9 ;
+  bspc S-, S-9 - S-0 S-. , 4 5 6 .
+        backslash [ S-= ] S-; _ _ 1 2 3 _
+  _ _ lshift _ @sym @nav
+)
+
+(defcfg
+  process-unmapped-keys   yes
+  concurrent-tap-hold     yes
+  allow-hardware-repeat   no
+)
