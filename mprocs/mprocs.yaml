@@ -1,0 +1,31 @@
+
+scrollback: 10000
+keymap_procs:
+  <C-q>: { c: toggle-focus }
+  <C-a>: null # unbind key
+  <x>: null # unbind key
+  <j>: null # unbind key
+  <z>: null # unbind key
+  <v>: null # unbind key
+  <u>: {c: prev-proc}
+  <e>: {c: next-proc}
+
+  <i>: {c: focus-term}
+  <k>: {c: term-proc}
+  <K>: {c: kill-proc}
+  <f>: {c: zoom}
+  <w>: {c: copy-mode-enter}
+  <C-u>: {c: scroll-up-lines, n: 1}
+  <C-E>: {c: scroll-down}
+keymap_term:
+  <C-n>: {c: focus-procs}
+keymap_copy:
+  <C-n>: {c: copy-mode-leave}
+  <w>: {c: copy-mode-end}
+  <c>: {c: copy-mode-copy}
+  <u>: {c: copy-mode-move, dir: Up}
+  <n>: {c: copy-mode-move, dir: Left}
+  <i>: {c: copy-mode-move, dir: Right}
+  <e>: {c: copy-mode-move, dir: Down}
+  <C-u>: {c: scroll-up-lines, n: 1}
+  <C-E>: {c: scroll-down}
