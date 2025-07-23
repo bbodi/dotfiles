@@ -1,0 +1,10 @@
+{
+    "+model": {
+        "scroll-speed": 3,
+    },
+    "+ui": {
+        "scroll-speed": 3,
+        "smooth-scroll": false,
+        "cursor-trail-length": 0
+    }
+}
