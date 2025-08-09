@@ -143,6 +143,7 @@
   (evil-define-key 'normal org-mode-map (kbd "C-t J") (lambda () (interactive) (evil-previous-line) (end-of-line) (org-insert-heading-respect-content)))
   (evil-define-key 'normal org-mode-map (kbd "C-t /") 'counsel-org-goto)
   (evil-define-key 'normal org-mode-map (kbd "C-t o") 'org-todo-list)
+  (evil-define-key 'normal org-mode-map (kbd "C-t t") 'org-todo)
 
   (evil-define-key 'normal org-mode-map (kbd "TAB") 'org-cycle)
 )
