@@ -1,0 +1,23 @@
+
+keybind = ctrl+t>shift+i=new_split:right
+keybind = ctrl+t>shift+n=new_split:left
+keybind = ctrl+t>shift+y=new_tab
+
+keybind = ctrl+t>i=goto_split:right
+keybind = ctrl+t>n=goto_split:left
+keybind = ctrl+t>q=close_surface
+
+keybind = ctrl+t>y=next_tab
+keybind = ctrl+t>l=previous_tab
+
+keybind = ctrl+t>r=clear_screen
+
+keybind = ctrl+t>o=write_scrollback_file:paste
+
+keybind = ctrl+t>f=toggle_split_zoom
+keybind = ctrl+t>shift+f=toggle_fullscreen
+
+keybind = ctrl+t>t=toggle_quick_terminal
+
+keybind = ctrl+t>c=copy_to_clipboard
+keybind = ctrl+t>p=paste_from_clipboard
