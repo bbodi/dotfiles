@@ -1,42 +1,57 @@
-
-;;
-(deflocalkeys-win
-  backslash 226
-  copilot 134
+(deflocalkeys-winiov2
+  isobksl 226   ;; (ISO backslash)
 )
 
-(defalias nav (layer-while-held navigation))
+
+(defalias
+)
 (defalias sym (layer-while-held symbols))
+(defalias nav (layer-while-held nav))
 (defalias pipe9 (fork 9 S-\ (lshift)))
+
 (defsrc
-                 q w e r t y u i o p
-  caps           a s d f g h j k l ;
-       backslash z x c v b n m , . /
-  lctrl f24 lmeta lalt spc ralt copilot
+  esc  1  2  3  4  5  6  7  8  9  0  -  =  bspc
+  tab  q  w  e  r  t  y  u  i  o  p  [  ]
+  caps a  s  d  f  g  h  j  k  l  ;  ' \
+  lsft isobksl  z  x  c  v  b  n  m  ,  .  /  up
+  lctl lmet lalt          spc           ralt left down right
 )
 
 (deflayer colemak
-       _ _ f p b j l u y esc
-  bspc _ r s t g m n e i o
-       z x c d v _ k h S-- enter /
-  _ _ _ lshift spc @sym @nav
+  _    _   _   @nav   _   _   _   _   _   _   _   _   _   _
+  _    _   w   f   p   b   j   l   u   y   esc _   _
+  bspc _   r   s   t   g   m   n   e   i   o   _   _
+  _    z   x   c   d   v   _   k   h   S-- ret /   _ 
+  _    _    lshift       spc            @sym  _  _  _
 )
 
-(deflayer navigation
-       _ _ f p b j l u y esc
-  bspc _ r s t g m n e i o
-       z x c d v _ k h _ enter /
-  _ _ _ lshift _ @sym @nav
-)
 (deflayer symbols
-       apos S-[ = S-] S-apos 0 7 8 @pipe9 ;
-  bspc S-, S-9 - S-0 S-. , 4 5 6 .
-        backslash [ S-= ] S-; _ _ 1 2 3 _
-  _ _ _ lshift _ @sym @nav
+   _    _   _   _   _   _   _   _   _   _   _   _   _   _
+   _    apos S-[ = S-] S-apos 0 7 8 @pipe9 ;  _   _
+  bspc S-, S-9 - S-0 S-. , 4 5 6 . _ _
+  _      \ [ S-= ] S-; _ _ 1 2 3 _  _  
+  _    _    lshift       spc            _  _  _  _
+)
+
+(deflayer nav
+  ;; Row 1: Function + number row – mostly transparent
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _
+
+  ;; Row 2: Top letter row – Home/End on U/O, arrows on HJKL cluster
+  _    _    _    _    _    _    _    home up   end  _    _    _
+
+  ;; Row 3: Home row – arrows on HJKL
+  bspc    _    _    _    _   _   _    left down right _    _    _
+
+  ;; Row 4: Bottom row – Enter on ., keep other keys transparent or useful
+  _    _    _    _    _    _    _    _    _    _ ret  _    _
+
+  ;; Row 5: Modifiers – lalt acts as lshift (for shift+arrow selection)
+  _    _    lshift       spc        _    left down right
 )
 
 (defcfg
-  process-unmapped-keys   yes
-  concurrent-tap-hold     yes
-  allow-hardware-repeat   no
+  process-unmapped-keys yes
+  concurrent-tap-hold yes
+  allow-hardware-repeat no
 )
