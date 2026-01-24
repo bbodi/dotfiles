@@ -61,14 +61,18 @@
   (define-key evil-normal-state-map (kbd "k") 'evil-open-below)
   (define-key evil-normal-state-map (kbd "J") 'evil-open-above)
   (define-key evil-normal-state-map (kbd "K") 'evil-open-below)
+  (define-key evil-normal-state-map (kbd "SPC SPC") 'execute-extended-command) 
 
-  ;; Org-Mode
-  (evil-define-key 'normal org-mode-map (kbd "M-i") 'org-do-demote)
-  (evil-define-key 'normal org-mode-map (kbd "M-n") 'org-do-promote)
-  (evil-define-key 'normal org-mode-map (kbd "M-u") 'org-move-subtree-up)
-  (evil-define-key 'normal org-mode-map (kbd "M-e") 'org-move-subtree-down)
+
+
+  ;; Átkötés: v → w (characterwise visual)
+  (define-key evil-normal-state-map (kbd "v") nil)          ; töröljük az eredetit
+  (define-key evil-normal-state-map (kbd "w") 'evil-visual-char)
+
+  ;; Átkötés: V → X (linewise visual)
+  (define-key evil-normal-state-map (kbd "V") nil)          ; töröljük az eredetit
+  (define-key evil-normal-state-map (kbd "X") 'evil-visual-line)
   ;; Visual mód keybindingek
-  (define-key evil-visual-state-map (kbd "w") 'evil-visual-char)
   (define-key evil-visual-state-map (kbd "C-s") (lambda () (interactive) (evil-normal-state) (save-buffer)))
   (define-key evil-visual-state-map (kbd "<escape>") 'evil-normal-state)
   (define-key evil-visual-state-map (kbd "l") 'evil-first-non-blank)
@@ -134,6 +138,11 @@
 
   ; (global-set-key (kbd "C-c a") 'org-agenda)
   ;; Org-Mode
+  (evil-define-key 'normal org-mode-map (kbd "M-i") 'org-do-demote)
+  (evil-define-key 'normal org-mode-map (kbd "M-n") 'org-do-promote)
+  (evil-define-key 'normal org-mode-map (kbd "M-u") 'org-move-subtree-up)
+  (evil-define-key 'normal org-mode-map (kbd "M-e") 'org-move-subtree-down)
+
   (evil-define-key 'normal org-mode-map (kbd "C-t l") 'org-clock-in)
   (evil-define-key 'normal org-mode-map (kbd "C-t L") 'org-clock-out)
   (evil-define-key 'normal org-mode-map (kbd "C-t g") 'org-clock-goto)
@@ -144,8 +153,19 @@
   (evil-define-key 'normal org-mode-map (kbd "C-t /") 'counsel-org-goto)
   (evil-define-key 'normal org-mode-map (kbd "C-t o") 'org-todo-list)
   (evil-define-key 'normal org-mode-map (kbd "C-t t") 'org-todo)
+  (evil-define-key 'normal org-mode-map (kbd "C-t f") 'org-narrow-to-subtree)
+  (evil-define-key 'normal org-mode-map (kbd "C-t F") 'widen)
+  (evil-define-key 'normal org-mode-map (kbd "C-t T") 'org-set-tags-command)
+
+  (evil-define-key 'normal org-mode-map (kbd "C-t . d") 'org-deadline)
+  (evil-define-key 'normal org-mode-map (kbd "C-t . s") 'org-schedule)
+  (evil-define-key 'normal org-mode-map (kbd "C-t . .") 'org-time-stamp)
+
+  (evil-define-key 'normal org-mode-map (kbd "W F") 'org-tree-to-indirect-buffer)
 
   (evil-define-key 'normal org-mode-map (kbd "TAB") 'org-cycle)
+
+
 )
 
 ;; Expand Region csomag
@@ -181,7 +201,8 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(inhibit-startup-screen t)
- '(package-selected-packages nil)
+ '(package-selected-packages
+   '(counsel evil-collection evil-surround expand-region undo-tree))
  '(safe-local-variable-values '((eval add-to-list 'org-agenda-files (buffer-file-name)))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -197,4 +218,39 @@
   (evil-collection-init '(dired org))
 )
 
-(find-file "~/Documents/new/todo.org")
+(use-package org
+  :hook
+  (org-mode . org-indent-mode)          ;; automatikusan bekapcsol org fájlokban
+  :custom
+  (org-indent-indentation-per-level 4)  ;; hány space-kel tolódjon minden szint (alap: 2)
+  (org-startup-indented t)              ;; örökölt opció, de a hook jobb
+  (org-hide-leading-stars t))           ;; opcionális: csak egy csillag látszik, a többi rejtve
+
+(find-file "D:\\app\\todo.org")
+(add-to-list 'org-agenda-files "D:\\app\\todo.org")
+
+;; 1. Erőltesd evil motion state-t az Org Agenda bufferben
+(add-hook 'org-agenda-mode-hook
+          (lambda ()
+            (evil-motion-state)   ;; azonnal motion state-be vált
+            ;; Ha evil-collection nem töltötte be magától, próbáld expliciten
+            (require 'evil-collection-org-agenda nil t)
+            (when (fboundp 'evil-collection-org-agenda-setup)
+              (evil-collection-org-agenda-setup))))
+
+;; 2. Ha még mindig nem működik, expliciten tedd az org-agenda-mode-ot evil módba
+(add-to-list 'evil-motion-state-modes 'org-agenda-mode)
+
+;; 3. Majd a Te kötéseid (ez most már érvényesül motion state-ben)
+(with-eval-after-load 'org-agenda
+  ;; Töröljük az Org saját kötéseit, ha még maradnak
+  (define-key org-agenda-mode-map (kbd "e") nil)
+  (define-key org-agenda-mode-map (kbd "u") nil)
+  (define-key org-agenda-mode-map (kbd "i") nil)
+  (define-key org-agenda-mode-map (kbd "n") nil)
+
+  (evil-define-key 'motion org-agenda-mode-map
+    "e" 'org-agenda-next-line
+    "u" 'org-agenda-previous-line
+    "i" 'org-agenda-later
+    "n" 'org-agenda-earlier))
