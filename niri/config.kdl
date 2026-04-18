@@ -90,7 +90,7 @@ output "eDP-1" {
     mode "2560x1600@60"
 
     // You can use integer or fractional scale, for example use 1.5 for 150% scale.
-    scale 2
+    scale 1.25
 
     // Transform allows to rotate the output counter-clockwise, valid values are:
     // normal, 90, 180, 270, flipped, flipped-90, flipped-180 and flipped-270.
@@ -105,7 +105,27 @@ output "eDP-1" {
     // so to put another output directly adjacent to it on the right, set its x to 1920.
     // If the position is unset or results in an overlap, the output is instead placed
     // automatically.
-    // position x=1280 y=0
+    position x=1728 y=0
+}
+
+// bitsafe standing monitor
+output "LG Electronics LG ULTRAFINE 504NTMX7M283" {
+    mode "2560x1600@60"
+    scale 1.25
+    transform "90"
+    position x=0 y=-2000
+    layout {
+        default-column-width { proportion 1.0; }
+    }
+}
+
+// Home 55'' 
+output "Hisense Electric Co., Ltd. HISENSE 0x676C626C" {
+    mode "3840x2160@119.880"
+    scale 1.25
+    layout {
+        default-column-width { proportion 0.4; }
+    }
 }
 
 // Settings that influence how windows are positioned and sized.
@@ -364,9 +384,11 @@ binds {
     Mod+Shift+Slash { show-hotkey-overlay; }
 
     // Suggested binds for running programs: terminal, app launcher, screen locker.
-    Mod+T hotkey-overlay-title="Open a Terminal: alacritty" { spawn "alacritty"; }
+    Mod+Return hotkey-overlay-title="Open a Terminal: ghostty" { spawn "ghostty"; }
+    Mod+T hotkey-overlay-title="Open a Terminal: ghostty" { spawn "ghostty"; }
     Mod+D hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
     Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
+    Super+G hotkey-overlay-title="Open Grok" {  spawn "brave" "--new-window" "https://grok.com";}
 
     // Use spawn-sh to run a shell command. Do this if you need pipes, multiple commands, etc.
     // Note: the entire command goes as a single argument. It's passed verbatim to `sh -c`.
@@ -398,14 +420,14 @@ binds {
     // Open/close the Overview: a zoomed-out view of workspaces and windows.
     // You can also move the mouse into the top-left hot corner,
     // or do a four-finger swipe up on a touchpad.
-    Mod+O repeat=false { toggle-overview; }
+    Mod+Escape repeat=false { toggle-overview; }
 
     Mod+Q repeat=false { close-window; }
 
     Mod+Up    { focus-window-up; }
-    Mod+Shift+U     { focus-window-up; }
+    Mod+U     { focus-window-up; }
 
-    Mod+Shift+E     { focus-window-down; }
+    Mod+E     { focus-window-down; }
     Mod+Down  { focus-window-down; }
 
     Mod+Left  { focus-column-left; }
@@ -420,8 +442,8 @@ binds {
     Mod+Ctrl+Right { move-column-right; }
 
     Mod+Ctrl+N     { move-column-left; }
-    Mod+Shift+Ctrl+E     { move-window-down; }
-    Mod+Shift+Ctrl+U     { move-window-up; }
+    Mod+Ctrl+E     { move-window-down; }
+    Mod+Ctrl+U     { move-window-up; }
     Mod+Ctrl+I     { move-column-right; }
 
     // Alternative commands that move across workspaces when reaching
@@ -440,10 +462,10 @@ binds {
     Mod+Shift+Down  { focus-monitor-down; }
     Mod+Shift+Up    { focus-monitor-up; }
     Mod+Shift+Right { focus-monitor-right; }
-    Mod+Shift+H     { focus-monitor-left; }
+    Mod+Shift+M     { focus-monitor-left; }
     Mod+Shift+J     { focus-monitor-down; }
     Mod+Shift+K     { focus-monitor-up; }
-    Mod+Shift+L     { focus-monitor-right; }
+    Mod+O     { focus-monitor-right; }
 
     Mod+Shift+Ctrl+Left  { move-column-to-monitor-left; }
     //Mod+Shift+Ctrl+Down  { move-column-to-monitor-down; }
@@ -464,12 +486,12 @@ binds {
 
     Mod+Page_Down      { focus-workspace-down; }
     Mod+Page_Up        { focus-workspace-up; }
-    Mod+E        { focus-workspace-down; }
-    Mod+U        { focus-workspace-up; }
+    Mod+H        { focus-workspace-down; }
+    Mod+L        { focus-workspace-up; }
     Mod+Ctrl+Page_Down { move-column-to-workspace-down; }
     Mod+Ctrl+Page_Up   { move-column-to-workspace-up; }
-    Mod+Ctrl+E         { move-column-to-workspace-down; }
-    Mod+Ctrl+U         { move-column-to-workspace-up; }
+    Mod+Ctrl+H         { move-column-to-workspace-down; }
+    Mod+Ctrl+L         { move-column-to-workspace-up; }
 
     // Alternatively, there are commands to move just a single window:
     // Mod+Ctrl+Page_Down { move-window-to-workspace-down; }
@@ -552,9 +574,9 @@ binds {
     Mod+BracketRight { consume-or-expel-window-right; }
 
     // Consume one window from the right to the bottom of the focused column.
-    Mod+L  { consume-window-into-column; }
+    Mod+Shift+L  { consume-window-into-column; }
     // Expel the bottom window from the focused column to the right.
-    Mod+Y { expel-window-from-column; }
+    Mod+Shift+Y { expel-window-from-column; }
 
     Mod+R { switch-preset-column-width; }
     // Cycling through the presets in reverse order is also possible.
@@ -618,7 +640,7 @@ binds {
     //
     // The allow-inhibiting=false property can be applied to other binds as well,
     // which ensures niri always processes them, even when an inhibitor is active.
-    Mod+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
+    // Mod+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
 
     // The quit action will show a confirmation dialog to avoid accidental exits.
     //Mod+Shift+Q { quit; }
@@ -632,3 +654,5 @@ binds {
     // moving the mouse or pressing any other key.
     Mod+Shift+P { power-off-monitors; }
 }
+
+include "dms/outputs.kdl"
