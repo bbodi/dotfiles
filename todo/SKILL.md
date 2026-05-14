@@ -410,18 +410,18 @@ End every response with a **Status** block summarizing what is currently being w
 ```
 **Status**
 - 🔥 DOING
-  - ⬆️ `#high-prio-task`
+  - ⬆️ `#high-prio-task` — [Notion](https://www.notion.so/...)
   - `#normal-prio-task`
-  - ⬇️ `#low-prio-task`
+  - ⬇️ `#low-prio-task` — [Issue #42](https://github.com/.../issues/42)
 - ⏸ PAUSED
   - `#task-id`
 - 🚧 BLOCKED
-  - `#task-id` (reason)
+  - `#task-id` (reason) — [Jira](https://...)
 - 👀 REVIEW
-  - ⬆️ `#high-prio-review`
-  - `#task-id`
+  - ⬆️ `#high-prio-review` — [PR #76](https://github.com/.../pull/76)
+  - `#task-id` — [PR #45](https://github.com/.../pull/45)
 - ⏳ TODO
-  - `#task-id`
+  - `#task-id` — [Notion](https://www.notion.so/...)
   - ⬇️ `#low-prio-todo`
 ```
 
@@ -433,6 +433,13 @@ Rules:
 - Read the current state and priority from the journal's `## Active` list (top of the file).
 - If nothing is in any open state, render `**Status:** idle (no open tasks)`.
 - If the response is a pure factual lookup whose answer already contains the state, the footer may be omitted to avoid duplication — use judgment.
+- **Append a clickable link per task when one is known**, after the slug and a ` — ` separator. Modern terminals (ghostty, iTerm2, Kitty, WezTerm, recent gnome-terminal) render markdown link syntax `[text](url)` as a clickable hyperlink, so write **short link text only** — never paste the raw URL. Examples of acceptable text: `PR #76`, `Issue #42`, `Notion`, `Jira`, `Figma`, `Linear DASH-123`, `Google Doc`. If no link is known for the task, just leave the line as the slug + (priority prefix/reason) with no trailing link.
+- **Pick one canonical link per task**, not a list of every URL the task has touched. Priority order for choosing it:
+    1. **REVIEW state** → the PR link (`PR #N`), pulled from the most recent `[REVIEW]` journal line for that `#task-id` (those lines carry the PR URL by convention). This is the most actionable link for a task in review.
+    2. **Any state** → if the task file exists and has a primary external resource (e.g. the `Source:` field is a Jira/Notion/Linear/GitHub-issue URL, or `## Notes` contains a clearly canonical external link), use that — labeled by what it is (`Notion`, `Jira`, `Issue #N`).
+    3. **No link known** → omit the trailing ` — [...]` segment entirely; don't write a placeholder.
+- **Look the link up; don't invent.** If you can't find a link in the journal or task file for that `#task-id`, don't guess a PR number or URL — leave it off. Inventing a link is worse than no link.
+- The `(reason)` annotation on BLOCKED stays *before* the link separator if both are present: `` - `#task-id` (waiting on legal) — [Jira](...) ``.
 
 ## Quick reference card
 
