@@ -410,19 +410,19 @@ End every response with a **Status** block summarizing what is currently being w
 ```
 **Status**
 - 🔥 DOING
-  - ⬆️ `#high-prio-task` — [Notion](https://www.notion.so/...)
-  - `#normal-prio-task`
-  - ⬇️ `#low-prio-task` — [Issue #42](https://github.com/.../issues/42)
+  - ⬆️ `#stripe-webhook-prod` — prod webhook outage fix — [Notion](https://www.notion.so/...)
+  - `#user-profile-page` — new profile page build
+  - ⬇️ `#low-prio-task` — small CSS polish — [Issue #42](https://github.com/.../issues/42)
 - ⏸ PAUSED
-  - `#task-id`
+  - `#task-id` — short summary
 - 🚧 BLOCKED
-  - `#task-id` (reason) — [Jira](https://...)
+  - `#task-id` — short summary (reason) — [Jira](https://...)
 - 👀 REVIEW
-  - ⬆️ `#high-prio-review` — [PR #76](https://github.com/.../pull/76)
-  - `#task-id` — [PR #45](https://github.com/.../pull/45)
+  - ⬆️ `#high-prio-review` — auth middleware rewrite — [PR #76](https://github.com/.../pull/76)
+  - `#admin-frontend-polish` — frontend polish pass — [PR #45](https://github.com/.../pull/45)
 - ⏳ TODO
-  - `#task-id` — [Notion](https://www.notion.so/...)
-  - ⬇️ `#low-prio-todo`
+  - `#solana-retry` — retry/backoff on Solana RPC — [Notion](https://www.notion.so/...)
+  - ⬇️ `#low-prio-todo` — onboarding copy polish
 ```
 
 Rules:
@@ -433,13 +433,14 @@ Rules:
 - Read the current state and priority from the journal's `## Active` list (top of the file).
 - If nothing is in any open state, render `**Status:** idle (no open tasks)`.
 - If the response is a pure factual lookup whose answer already contains the state, the footer may be omitted to avoid duplication — use judgment.
-- **Append a clickable link per task when one is known**, after the slug and a ` — ` separator. Modern terminals (ghostty, iTerm2, Kitty, WezTerm, recent gnome-terminal) render markdown link syntax `[text](url)` as a clickable hyperlink, so write **short link text only** — never paste the raw URL. Examples of acceptable text: `PR #76`, `Issue #42`, `Notion`, `Jira`, `Figma`, `Linear DASH-123`, `Google Doc`. If no link is known for the task, just leave the line as the slug + (priority prefix/reason) with no trailing link.
+- **Append a one-line summary after the slug**, separated by ` — `: `` - `#task-id` — descriptive summary ``. The summary is a tight phrase describing what the task is about (derived from the task's Active-list title or its task-file H1 — don't invent), specific enough that a reader who has never seen the task can tell what it's about from the summary alone. **Keep it short enough that the whole rendered line fits in one row of an 80-column terminal**, *excluding the URL portion of the link* (the URL portion is collapsed in modern terminals, but the link text counts). Budget the line as: `4 (indent) + 2 + slug_length + 3 (em-dash) + summary_length + 3 (em-dash) + link_text_length ≤ 80`. Solve for `summary_length` and aim for that ceiling minus ~2–4 chars of slack — typical summaries land in the **30–55 character / ~5–10 word range**, longer for short slugs without a link and shorter for long slugs with a link. Don't be cryptic: if a reader can't tell what the task is about from the summary alone, it's too short. Don't restate the slug, don't include trailing punctuation, don't write a full sentence. Examples: `auth middleware rewrite for compliance`, `prod webhook outage fix (Stripe)`, `new profile page in the admin frontend` — not `"middleware rewrite"` (too cryptic) and not `"Rewrite the authentication middleware to remove session-token storage so we meet the new compliance requirements."` (too long).
+- **Append a clickable link per task when one is known**, after the summary and another ` — ` separator. Modern terminals (ghostty, iTerm2, Kitty, WezTerm, recent gnome-terminal) render markdown link syntax `[text](url)` as a clickable hyperlink, so write **short link text only** — never paste the raw URL. Examples of acceptable text: `PR #76`, `Issue #42`, `Notion`, `Jira`, `Figma`, `Linear DASH-123`, `Google Doc`. If no link is known for the task, just leave the line as slug + summary with no trailing link.
 - **Pick one canonical link per task**, not a list of every URL the task has touched. Priority order for choosing it:
     1. **REVIEW state** → the PR link (`PR #N`), pulled from the most recent `[REVIEW]` journal line for that `#task-id` (those lines carry the PR URL by convention). This is the most actionable link for a task in review.
     2. **Any state** → if the task file exists and has a primary external resource (e.g. the `Source:` field is a Jira/Notion/Linear/GitHub-issue URL, or `## Notes` contains a clearly canonical external link), use that — labeled by what it is (`Notion`, `Jira`, `Issue #N`).
     3. **No link known** → omit the trailing ` — [...]` segment entirely; don't write a placeholder.
 - **Look the link up; don't invent.** If you can't find a link in the journal or task file for that `#task-id`, don't guess a PR number or URL — leave it off. Inventing a link is worse than no link.
-- The `(reason)` annotation on BLOCKED stays *before* the link separator if both are present: `` - `#task-id` (waiting on legal) — [Jira](...) ``.
+- The `(reason)` annotation on BLOCKED goes **after the summary, before the link separator**, in parentheses: `` - `#task-id` — short summary (waiting on legal) — [Jira](...) ``.
 
 ## Quick reference card
 
