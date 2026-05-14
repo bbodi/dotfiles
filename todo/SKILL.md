@@ -44,8 +44,8 @@ Two parts: a pinned `## Active` list at the top, then a chronological day-by-day
 
 ## Active
 
-- DOING - Activity-tracker integration test coverage (#integration-test-coverage) → [[tasks/integration-test-coverage]]
-- DOING - Wallet Activity page (#wallet-activity-page) → [[tasks/wallet-activity-page]]
+- DOING - Integration test coverage (#integration-test-coverage) → [[tasks/integration-test-coverage]]
+- DOING - User profile page (#user-profile-page) → [[tasks/user-profile-page]]
 - REVIEW - Some review task (#some-review-task) → [[tasks/some-review-task]]
 - TODO - Quick CSS tweak (#quick-css-tweak)
 
@@ -69,7 +69,7 @@ Two parts: a pinned `## Active` list at the top, then a chronological day-by-day
 
 - `14:35` [WORK  ] CI node bump
 
-**EOD:** #solana-retry done; #wallet-activity in TODO.
+**EOD:** #solana-retry done; #user-profile-page in TODO.
 ```
 
 ### Active list format
@@ -139,6 +139,7 @@ States: `TODO`, `DOING`, `PAUSED`, `BLOCKED`, `REVIEW`, `DONE`, `CANCELED`.
 - Spaces in task names → hyphens.
 - No two open tasks may share an ID. (Closed tasks may reuse if context makes it unambiguous, but prefer not to.)
 - ID = filename stem (when a file exists): `#solana-retry` → `tasks/solana-retry.md`.
+- **Sub-items of an existing task do not get their own task ID.** If something is a scope item, follow-up, or sub-component of an existing in-flight task (e.g. "fix the missing tag on the payment history table" relative to the payment-history task), don't spin off a new `#slug` for it. Mention it in the parent task's journal `[NOTE  ]` lines, and — if the parent has a task file — capture it in the parent's `## Notes` or a `## Scope items` section. Spinning off separate IDs for sub-items fragments the tracking, hides the parent–child relationship, and clutters the Active list with items that the team would never read as standalone work. Promote a sub-item to its own task only if it later grows scope beyond the parent (e.g. it becomes a cross-cutting refactor, gets its own PR independent of the parent, or someone else owns it).
 
 ## Priority
 
@@ -189,7 +190,7 @@ The rule of thumb: **does this note record information / knowledge, or does it j
 If a task starts file-less and later accumulates real context (per the criteria above), create the file at that point — append a Notes bullet for what you know, then carry on.
 
 ```markdown
-# #wallet-activity — Wallet Activity page  `#frontend` `#dashboard`
+# #user-profile-page — User profile page  `#frontend` `#dashboard`
 
 - **Created:** 2026-04-28 14:22
 - **Source:**  Slack DM from <name>
@@ -257,6 +258,31 @@ User: "I'm starting on the Solana retry"
 2. Update the `## Active` list at the top of the journal — add `- DOING - Solana retry (#solana-retry)` (with `→ [[tasks/solana-retry]]` only if the file exists). If transitioning from PAUSED/BLOCKED/REVIEW, use `[RESUME]` instead of `[START ]` and just change the state on the existing Active line.
 3. Do **not** create a task file by default — only if the task already has substantial context (inbound message, scope, etc.).
 
+### Log an ad-hoc activity (no task)
+
+User mentions in passing that they did or are doing something that **isn't already in their task list** — a quick one-off effort, a small chore, a brief investigation, a casing fix, a short manual op, helping someone debug, etc. These came up suddenly and are gone almost as fast.
+
+**Default: don't open a task for it.** No `[NEW   ]` + `[DONE  ]` pair, no slug, no Active-list entry. Just append a single `[WORK  ]` line (no `#task-id`) recording what happened:
+
+```
+- `11:04` [WORK  ] fixed `Foobar` → `FooBar` brand casing in the admin frontend
+- `14:18` [WORK  ] manually rotated the staging Postgres password
+- `14:42` [WORK  ] helped a teammate reproduce the date picker glitch on Safari
+```
+
+**Promote to a real task only if the same activity is referenced again.** If the user later adds a follow-up note, asks for its status, or mentions the same thing a second time, that's the signal it's not a one-off — pick a slug at that point, append a `[NEW   ]` line with the chosen ID (plus whatever current-state verb fits: `[DONE  ]`, `[REVIEW]`, etc.), and add it to the Active list if it isn't already terminal. The original `[WORK  ]` line stays put — the journal is append-only.
+
+**Override:** if the user explicitly frames it as a task ("save this as a task", "track this", "open #foo for …"), skip the `[WORK  ]` shortcut and create the task normally with `[NEW   ]`.
+
+### Mentions of small work in passing
+
+If the user mentions in passing that they worked on / are working on something small — without explicitly framing it as a task ("save this as a task", "track this", "open #foo for …") — treat it as **completed**, not in-progress. Don't open a new task, don't add it to the Active list, and don't list it in *Next:* of the daily report as still-open. The in-passing framing ("I worked on …", "I'm working on …") is the signal that the user does *not* want it tracked as an open item.
+
+- **Sub-item of an existing task** → append `` - `<NOW>` [NOTE  ] #<parent> — <sub-item> done `` on the parent task.
+- **Standalone, unrelated to any current task** → append a single `[WORK  ]` line per *Log an ad-hoc activity (no task)* above.
+
+In the daily report, mention the work under *Done today* (it's real work that happened that day) and **never** under *Next:* (it isn't still open) — even though the user's wording may have sounded in-progress. If the user later explicitly frames the same item as a task ("save this as a task", "track this"), promote it to a real task with `[NEW   ]` per the normal flow.
+
 ### Log a working note
 
 User: "Quick note: Ádám said use exponential backoff"
@@ -284,7 +310,7 @@ User: "Done, fix is merged"
 
 User pastes a message and says "save this as a task".
 
-1. Pick a slug from the request's intent (`#wallet-activity`, `#stripe-webhook-prod`).
+1. Pick a slug from the request's intent (`#user-profile-page`, `#stripe-webhook-prod`).
 2. Create `tasks/<id>.md` with:
    - `Created`, `Source` fields (no `Status`)
    - `## Summary` — one paragraph paraphrase
@@ -302,8 +328,13 @@ User: "csinálj standup riportot" / "what did I do yesterday"
 Compose from the journal:
 
 - **Yesterday** (or "last working day"): all `[DONE  ]`, `[REVIEW]`, and substantive `[NOTE  ]` lines from the previous working day. Group by `#task-id`.
-- **Today (planned)**: tasks currently DOING (read from the `## Active` list) plus the day's `**Plan:**` line if present.
-- **Blockers**: every BLOCKED task with reason from the task file or last journal line.
+- **`[NEW   ]` lines never appear in *Done today*.** Creating a task is pipeline, not activity. Two cases:
+    - If the NEW item is a follow-up surfaced while working on another in-flight task X (e.g. issues noticed while reviewing PR #N for task X), fold it into task X's *Done today* line — `"surfaced two follow-ups off PR #N, now queued: …"`. Don't give it a separate line, and never use a generic *"backlog grooming"* bucket.
+    - If the NEW item is genuinely standalone (not tied to today's work), surface it only in *Next:* if it's planned for upcoming work — never in *Done today:*. If it isn't worth mentioning in *Next:*, leave it out entirely; the Status footer already lists open TODOs.
+- **In-passing small work mentions are *Done today*, never *Next:*.** See *Mentions of small work in passing* above. When the user mentions in passing that they did or are doing something small without framing it as a task, treat it as completed: surface under *Done today* (folded into the parent task's line if it's a sub-item, otherwise as its own line) and **omit from *Next:*** even though the in-progress wording may suggest otherwise.
+- **Today (planned)**: tasks currently DOING (read from the `## Active` list) plus the day's `**Plan:**` line if present. **Do not list open PRs here** — those belong in their own *Open PRs* section (see below).
+- **Open PRs**: every task currently in REVIEW state with a known PR — one line per task, `[PR #N](url)` plus a short label. Include the task even if the PR was opened on an earlier day; the section is a snapshot of what is currently awaiting review, not a daily-activity list. **PRs opened on the day appear in both *Done today* and *Open PRs*** — the same-day opening is reportable activity *and* a current open-PR state, so they show in both. PRs that remain open from earlier days appear only in *Open PRs*, never in *Next:*. Place this section after *Next:* and before *Blockers:*. **Omit the section entirely when no PRs are open** — same rule as *Blockers:*, absence is the signal.
+- **Blockers**: every BLOCKED task with reason from the task file or last journal line. **Omit the *Blockers:* line entirely when there are none** — don't write *"Blockers: none"*. Absence of the line *is* the "none" signal.
 
 Keep it short — 3-5 bullets per section. Output in **Slack mrkdwn format, not standard markdown**, so the user can paste it directly into Slack. Slack mrkdwn differs from regular markdown — write the report using these conventions:
 
@@ -314,7 +345,7 @@ Keep it short — 3-5 bullets per section. Output in **Slack mrkdwn format, not 
 - Links are written `[text](url)` (markdown style). Slack accepts this form via paste conversion, and the markdown form keeps the journal block readable in any markdown viewer (only the text shows, the URL is hidden behind the link). The native Slack `<url|text>` form is tolerated as a fallback but not preferred — it leaks the raw URL into markdown viewers.
 - **Emojis are allowed (and encouraged) in the daily report block** to make scanning easier in Slack — one leading emoji per task line that hints at the outcome (e.g. ✅ merged, 🗑️ deleted, 🔥 in progress, 👀 in review, 🔐 secrets/auth, 📊 data/query, 🛠️ fix/optimization, 👍 approved, 🔎 investigated, 🚧 blocked). This is the **only** place in the system where emoji usage is opt-in for content; journal event lines, Active-list entries, task files, meeting notes, and `howto.md` stay emoji-free. (The Status footer at the end of chat responses is the other emoji-bearing surface, and its emoji set is fixed by its own spec below — don't conflate the two.)
 
-**Use human-readable titles, not raw slug IDs.** The audience is a team Slack, not a grep tool, so derive a clean title for each task from the task file's H1 (the descriptive part after the slug-id) or the Active list. Write it in Slack-bold (`*Title*`, single asterisk). Don't paste `#cbtc-dashboard-ui-redesign` in the report — write `*CBTC Dashboard UI redesign*` instead. PR numbers, endpoint paths, and other technical identifiers can stay verbatim.
+**Use human-readable titles, not raw slug IDs.** The audience is a team Slack, not a grep tool, so derive a clean title for each task from the task file's H1 (the descriptive part after the slug-id) or the Active list. Write it in Slack-bold (`*Title*`, single asterisk). Don't paste `#admin-ui-redesign` in the report — write `*Admin UI redesign*` instead. PR numbers, endpoint paths, and other technical identifiers can stay verbatim.
 
 **Strip insider/private tooling from the report.** The team has visibility into shared things — public PRs, deployed services, well-known endpoints, prod commits — but **not** into the user's local scratch tools, ad-hoc one-off scripts, private repo paths, or local file paths. Don't name them in the Slack output. Describe the *outcome* in team-facing terms instead, and keep the implementation detail in the task file's Notes/Outcome (which is for the user, not the team).
 
@@ -370,6 +401,7 @@ Net result: the day always ends with exactly one up-to-date report block, and th
 - **Stop and ask when ambiguous.** If "done" is said but two tasks are in DOING, ask which. If a slug isn't obvious from the request, propose one and confirm.
 - **English everywhere — chat responses and file content alike.** Every journal entry, task file, Active list line, meeting note, **and every chat response back to the user** is written in English, regardless of the language the user chats in. If the user writes in Hungarian (or any other language), still answer in English. The only exception is verbatim quotes — e.g., the contents of a `## Original message` blockquote, or a meeting transcript — which preserve the original language. Surrounding structure (headings, fields, prose, summaries, paraphrased notes, and the assistant's chat output) stays English.
 - **One day per `## H2`.** Don't create multiple `## YYYY-MM-DD` headers for the same date. Append under the existing one.
+- **This SKILL.md is company-independent.** It must not contain any specific company, product, brand, internal codename, or repository name from the user's workplace — not in examples, not in Active-list samples, not in the quick-reference card, and not even in the body of this very rule (so the rule's wording can't itself be the exception). All examples use generic placeholders only: invented brand strings (`FooBar`, `Acme`), generic feature names ("the admin frontend", "the docs site", "user profile page"), or public/abstract third-party names that are not the user's workplace. If you notice a workplace-specific name slipping in anywhere, replace it with a generic equivalent.
 
 ## Response format — Status footer
 
@@ -424,7 +456,7 @@ Active list:
 ## Active
 
 - DOING - Solana retry (#solana-retry) → [[tasks/solana-retry]]
-- REVIEW - CBTC dashboard polish (#cbtc-dashboard-polish)
+- REVIEW - Admin frontend polish (#admin-frontend-polish)
 - TODO - Quick CSS tweak (#quick-css-tweak)
 ```
 
